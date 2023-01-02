@@ -1,6 +1,6 @@
 TMPDIR = "${TOPDIR}/tmp_container"
 
-DISTRO ?= "poky"
+#DISTRO ?= "poky"
 
 PACKAGE_CLASSES ?= "package_rpm"
 
@@ -20,7 +20,7 @@ PREFERRED_PROVIDER_virtual/kernel = "linux-dummy"
 PREFERRED_PROVIDER_virtual/kernel_poky-tiny = "linux-dummy"
 PREFERRED_PROVIDER_virtual/kernel_linuxstdbase = "linux-dummy"
 
-DISTRO = "poky"
+DISTRO = "trustx"
 #DISTRO_FEATURES:append = " virtualization"
 
 IMAGE_FSTYPES = "cpio.gz ext4"
