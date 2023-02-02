@@ -8,7 +8,7 @@ DEPENDS += "coreutils-native"
 
 IMAGE_FSTYPES="${TRUSTME_FSTYPES}"
 
-INITRAMFS_IMAGE_BUNDLE = "1"
+INITRAMFS_IMAGE_BUNDLE ?= "1"
 INITRAMFS_IMAGE = "trustx-cml-initramfs"
 
 PACKAGE_CLASSES = "package_ipk"
