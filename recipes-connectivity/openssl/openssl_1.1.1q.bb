@@ -30,8 +30,8 @@ inherit lib_package multilib_header multilib_script ptest
 MULTILIB_SCRIPTS = "${PN}-bin:${bindir}/c_rehash"
 
 PACKAGECONFIG ?= ""
-PACKAGECONFIG_class-native = ""
-PACKAGECONFIG_class-nativesdk = ""
+PACKAGECONFIG:class-native = ""
+PACKAGECONFIG:class-nativesdk = ""
 
 PACKAGECONFIG[cryptodev-linux] = "enable-devcryptoeng,disable-devcryptoeng,cryptodev-linux,,cryptodev-module"
 
@@ -42,12 +42,12 @@ do_configure[cleandirs] = "${B}"
 #| ./libcrypto.so: undefined reference to `setcontext'
 #| ./libcrypto.so: undefined reference to `makecontext'
 EXTRA_OECONF:append:libc-musl = " no-async"
-EXTRA_OECONF:append:libc-musl_powerpc64 = " no-asm"
+EXTRA_OECONF:append:libc-musl:powerpc64 = " no-asm"
 
 # adding devrandom prevents openssl from using getrandom() which is not available on older glibc versions
 # (native versions can be built with newer glibc, but then relocated onto a system with older glibc)
-EXTRA_OECONF_class-native = "--with-rand-seed=os,devrandom"
-EXTRA_OECONF_class-nativesdk = "--with-rand-seed=os,devrandom"
+EXTRA_OECONF:class-native = "--with-rand-seed=os,devrandom"
+EXTRA_OECONF:class-nativesdk = "--with-rand-seed=os,devrandom"
 
 # Relying on hardcoded built-in paths causes openssl-native to not be relocateable from sstate.
 CFLAGS:append:class-native = " -DOPENSSLDIR=/not/builtin -DENGINESDIR=/not/builtin"
