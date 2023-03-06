@@ -3,7 +3,13 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                echo "building meta-trustx"
+                echo "BRANCH_NAME ${BRANCH_NAME}"
+                echo "CHANGE_TARGET ${CHANGE_TARGET}"
+                echo "CHANGE_TITLE ${CHANGE_TITLE}"
+                echo "CHANGE_URL ${CHANGE_URL}"
+                echo "GIT_COMMIT ${GIT_COMMIT}"
+                echo "GIT_BRANCH ${GIT_BRANCH}"
+                echo "GIT_URL ${GIT_URL}"
             }
         }
         stage('build GyroidOS') {
