@@ -8,7 +8,7 @@ pipeline {
         }
         stage('build GyroidOS') {
             steps {
-                build job: "gyroidos", wait: true, parameters: [
+                build job: "../gyroidos", wait: true, parameters: [
                     string(name: 'GYROID_ARCH', value: 'x86'),
                     string(name: 'GYROID_MACHINE', value: 'genericx86-64'),
                     string(name: 'CML_BRANCH_NAME', value: 'kirkstone'),
