@@ -2,15 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-
-        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
-        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-
-        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
-        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+	string(name: 'PR_BRANCHES', defaultValue: '', description: 'Comma separated list of additional pull request branches (e.g. meta-trustx=PR-177,meta-trustx-nxp=PR-13,gyroidos_build=PR-97)')
     }
 
     stages {
@@ -22,7 +14,7 @@ pipeline {
         stage('build GyroidOS') {
             steps {
                 build job: "../gyroidos", wait: true, parameters: [
-                    string(name: "PR_BRANCHES", value: "meta-trustx=${BRANCH_NAME}")
+                    string(name: "PR_BRANCHES", value: "meta-trustx=${BRANCH_NAME},${PR_BRANCHES}")
                 ]
             }
         }
