@@ -1,4 +1,4 @@
-From 728b4043c0bdac282f2abb7d8f8c54c9d7cea8d2 Mon Sep 17 00:00:00 2001
+From 6c5ec8db2d36017f67325593b386d1b358d7ee81 Mon Sep 17 00:00:00 2001
 From: Neil Horman <nhorman@openssl.org>
 Date: Fri, 27 Oct 2023 14:57:37 -0400
 Subject: [PATCH] Prevent accessing of global c++ objects once they are deleted
@@ -11,10 +11,10 @@ Reset objects_deleted after reset is called.
  2 files changed, 143 insertions(+)
 
 diff --git a/src/lib/SoftHSM.cpp b/src/lib/SoftHSM.cpp
-index 0a0c32c..384bd43 100644
+index 02c0f95..95bf208 100644
 --- a/src/lib/SoftHSM.cpp
 +++ b/src/lib/SoftHSM.cpp
-@@ -88,6 +88,8 @@
+@@ -89,6 +89,8 @@
  
  // Initialise the one-and-only instance
  
@@ -23,7 +23,7 @@ index 0a0c32c..384bd43 100644
  #ifdef HAVE_CXX11
  
  std::unique_ptr<MutexFactory> MutexFactory::instance(nullptr);
-@@ -367,6 +369,8 @@ void SoftHSM::reset()
+@@ -406,6 +408,8 @@ void SoftHSM::reset()
  {
  	if (instance.get())
  		instance.reset();
@@ -32,7 +32,7 @@ index 0a0c32c..384bd43 100644
  }
  
  // Constructor
-@@ -406,6 +410,7 @@ SoftHSM::~SoftHSM()
+@@ -445,6 +449,7 @@ SoftHSM::~SoftHSM()
  
  	isInitialised = false;
  
