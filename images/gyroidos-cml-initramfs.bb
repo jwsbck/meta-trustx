@@ -1,5 +1,7 @@
 DECRIPTION = "Minimal initramfs-based root file system for CML"
 
+DEPENDS += "gyroidos-cml-modules gyroidos-cml-firmware"
+
 PACKAGE_INSTALL = "\
 	${VIRTUAL-RUNTIME_base-utils} \
 	udev \
@@ -128,10 +130,16 @@ cleanup_debug_files () {
         rm -f ${IMAGE_ROOTFS}/usr/lib/.debug/libprotoc.so.*
 }
 
+hash_modules_firmware () {
+	sha256sum ${DEPLOY_DIR_IMAGE}/gyroidos-cml-modules-${MACHINE}.squashfs | cut -d" " -f1 > ${IMAGE_ROOTFS}/etc/modules.hash
+	sha256sum ${DEPLOY_DIR_IMAGE}/gyroidos-cml-firmware-${MACHINE}.squashfs  | cut -d" " -f1 > ${IMAGE_ROOTFS}/etc/firmware.hash
+}
+
 ROOTFS_POSTPROCESS_COMMAND:append = " update_modules_dep; "
 ROOTFS_POSTPROCESS_COMMAND:append = " update_hostname; "
 ROOTFS_POSTPROCESS_COMMAND:append = " cleanup_boot; "
 ROOTFS_POSTPROCESS_COMMAND:append = " install_ima_cert; "
+ROOTFS_POSTPROCESS_COMMAND:append = " hash_modules_firmware; "
 
 # protobuf debug symbols are huge >100M, remove this from initramfs
 ROOTFS_POSTPROCESS_COMMAND:append = '${@oe.utils.vartrue('DEVELOPMENT_BUILD', " cleanup_debug_files; ", "",d)}'
