@@ -6,14 +6,12 @@ LICENSE = "BSD-3-Clause"
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=1e023f61454ac828b4aa1bc4293f7d5f"
 
-SRC_URI[md5sum] = "88b87c5fde7ac8edbc934f2d6f39417b"
-SRC_URI[sha256sum] = "3c065a1616972d04e8cc63d4b68dfa289e0977b521a11fed76e5973bc49ad75e"
-
-SRC_URI = "${SOURCEFORGE_MIRROR}/project/ibmtpm20tss/ibmtss${PV}.tar.gz;downloadfilename=ibmtss-${PV}.tar.gz;subdir=${PN}"
+SRC_URI = "git://github.com/kgoldman/ibmtss.git;protocol=https;branch=master"
+SRCREV = "fe60a941f117cbfbe7c90fc61840ff32b330d094"
 
 DEPENDS += "openssl"
 
-S = "${WORKDIR}/${PN}/utils"
+S = "${WORKDIR}/git/utils"
 
 INSANE_SKIP:${PN} = "ldflags"
 INSANE_SKIP:${PN}-dev = "ldflags"
